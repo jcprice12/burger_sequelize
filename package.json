@@ -1,0 +1,32 @@
+{
+  "name": "burger_sequelize",
+  "version": "1.0.0",
+  "description": "an app to make and eat burgers I guess",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcprice12/burger_sequelize.git"
+  },
+  "keywords": [
+    "burgers",
+    "sequelize"
+  ],
+  "author": "John Price",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jcprice12/burger_sequelize/issues"
+  },
+  "homepage": "https://github.com/jcprice12/burger_sequelize#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "express-handlebars": "^3.0.0",
+    "method-override": "^2.3.9",
+    "mysql2": "^1.3.6",
+    "sequelize": "^4.3.1"
+  }
+}

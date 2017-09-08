@@ -1,0 +1,118 @@
+<div class="container-fluid mySiteHeader">
+    <div class="container">
+        <div class="page-header">
+            <h1>Eat Da Burger</h1>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div id="formPanel" class="panel panel-primary">
+        <div class="panel-heading">
+            <h2>Craft Your Burger</h2>
+        </div>
+        <div class="panel-body">
+            <form id="myForm">
+
+                <div class="form-group myContainer">
+                    <label for="commentText">Comment</label>
+                    <textarea id="commentText" name="comment" class="form-control" rows="3" placeholder="Don't forget the secret sauce." maxlength="250"></textarea>
+                </div>
+
+                <div id="toppingsGroup" class="form-group">
+                    {{#each toppings}}
+                        <div class="checkbox">
+                            <label><input class="checkInput" type="checkbox" name="{{this.nameToppings}}" value="{{this.nameToppings}}">{{this.nameToppings}}</label>
+                        </div>
+                    {{/each}}
+                </div>
+
+                <button id="submitCreation" class="btn btn-primary btn-lg btn-block mySubmit" type="submit">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Create
+                </button>
+
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2>Burgers</h2>
+        </div>
+        <div class="panel-body">
+            <div class="col-xs-12 col-sm-6">
+                <div class="container-fluid">
+                    <h2>Uneaten Burgers</h2>
+                </div>
+                <div class="container-fluid burgersCol">
+                    {{#each burgers}}
+                        {{#unless this.devoured}}
+                            <div class="burgerContainer">
+                                <div class="burgerId">
+                                    {{this.idBurgers}}
+                                </div>
+                                <img src="assets/img/burger.png" alt="burger" class="col-xs-12">
+                                <div class="container-fluid">
+                                    <h3>Toppings</h3>
+                                    <ul>
+                                        {{#each this.toppings}}
+                                            <li>{{this.nameToppings}}</li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                                <div class="container-fluid">
+                                    <h3>Comments</h3>
+                                    <p>{{this.comments}}</p>
+                                </div>
+                                <div class="container-fluid">
+                                    <h3>Date Created</h3>
+                                    <p>{{this.date}}</p>
+                                </div>
+                                <div class="container-fluid eatBurgerButton">
+                                    <form action="/{{this.idBurgers}}?_method=PUT" method="POST">
+                                        <button id="submitDevour" class="btn btn-primary btn-lg btn-block myDevour" type="submit">
+                                            Eat Da Burger!
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        {{/unless}}
+                    {{/each}}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="container-fluid">
+                    <h2>Eaten Burgers</h2>
+                </div>
+                <div class="container-fluid burgersCol">
+                    {{#each burgers}}
+                        {{#if this.devoured}}
+                            <div class="burgerContainer">
+                                <div class="burgerId">
+                                    {{this.idBurgers}}
+                                </div>
+                                <img src="assets/img/burger.png" alt="burger" class="col-xs-12">
+                                <div class="container-fluid">
+                                    <h3>Toppings</h3>
+                                    <ul>
+                                        {{#each this.toppings}}
+                                            <li>{{this.nameToppings}}</li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                                <div class="container-fluid">
+                                    <h3>Comments</h3>
+                                    <p>{{this.comments}}</p>
+                                </div>
+                                <div class="container-fluid">
+                                    <h3>Date Eaten</h3>
+                                    <p>{{this.eatenDate}}</p>
+                                </div>
+                            </div>
+                        {{/if}}
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/javascript/client.js"></script>
