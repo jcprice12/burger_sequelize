@@ -55,7 +55,8 @@ router.get("/", function(req, res) {
 router.put("/:id", function(req, res) {
     var id = req.params.id;
     db.Burger.update({
-        devoured : true
+        devoured : true,
+        dateEaten : new Date().toISOString().slice(0, 19).replace('T', ' ')
     },
     {
         where : {
