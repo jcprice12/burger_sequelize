@@ -3,14 +3,15 @@ module.exports = function(sequelize, DataTypes) {
         comment : {
             type: DataTypes.STRING,
             allowNull : true,
+            defaultValue : "",
             validate : {
                 len : [0,250]
             }
         },
         dateCreated : {
-            type: DataTypes.DATE(6),
-            allowNull : false,
-            defaultValue : sequelize.literal('CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6)')
+            type: DataTypes.DATE,
+            defaultValue : sequelize.literal('NOW()'),
+            allowNull : false
         }, 
         devoured : {
             type : DataTypes.BOOLEAN,

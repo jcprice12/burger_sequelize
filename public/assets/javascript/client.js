@@ -6,14 +6,14 @@ $(document).ready(function(){
         var myObj = {
             toppings : [],
             burger : {
-                comments : $("#commentText").val(),
+                comment : $("#commentText").val(),
             },
         }
 
         var checks = document.getElementsByClassName("checkInput");
         for(var i = 0; i < checks.length; i++){
             if(checks[i].checked){
-                var topping = [($(checks[i]).val())];
+                var topping = $(checks[i]).val();
                 myObj.toppings.push(topping);
             }
         }

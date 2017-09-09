@@ -12,6 +12,7 @@ function formatBurgers(burgers){
     }
     return burgers;
 }
+//helper function to format the Toppings
 function formatToppings(toppings){
     for(var i = 0; i < toppings.length; i++){
         toppings[i] = toppings[i].dataValues;
@@ -31,7 +32,7 @@ router.get("/", function(req, res) {
         }]
     });
     var getToppingsPromise = db.Topping.findAll({
-        
+        //don't really have any where conditions or joins to perform
     });
     promises.push(getBurgersPromise);
     promises.push(getToppingsPromise);
@@ -52,31 +53,39 @@ router.get("/", function(req, res) {
 
 //to update burger (someone ate it)
 router.put("/:id", function(req, res) {
-    // var id = req.params.id;
-    // burger.devourBurger(id)
-    // .then(function(data){
-    //     console.log(data);
-    //     res.redirect("/");
-    // }).catch(function(err){
-    //     console.log(err);
-    //     res.status(500).send("Error updating burger with id: " + id);
-    // });
-    res.end();
+    var id = req.params.id;
+    db.Burger.update({
+        devoured : true
+    },
+    {
+        where : {
+            "id" : id,
+        }
+    }).then(function(data){
+        console.log(data);
+        res.redirect("/");
+    }).catch(function(err){
+        console.log(err);
+        res.status(500).send("Error updating burger with id: " + id);
+    });
 })
 
 //to create a burger
 router.post("/", function(req, res){
-    // var formData = req.body;
-    // console.log(formData);
-    // burger.createBurger(formData.burger, formData.toppings)
-    // .then(function(data){
-    //     console.log(data)
-    //     res.json(data);
-    // }).catch(function(err){
-    //     console.log(err);
-    //     res.status(500).send("Error making a burger. Please try again later");
-    // });
-    res.end();
+    var formData = req.body;
+    console.log(formData);
+    db.Burger.create(formData.burger).then(function(myBurger){
+        myBurger.setToppings(formData.toppings).then(function(data){
+            console.log(data);
+            res.json(data);
+        }).catch(function(err){
+            console.log(err);
+            res.status(500).send("Error making a burger. Please try again later");
+        });
+    }).catch(function(err){
+        console.log(err);
+        res.status(500).send("Error making a burger. Please try again later");
+    });
 });
 
 // Export routes for server.js to use.
