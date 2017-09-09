@@ -23,22 +23,29 @@ var db = require("../models");
 
 //route for main page (gets burgers and toppings)
 router.get("/", function(req, res) {
-    // var promises = [];
-    // promises.push(burger.getBurgers());
-    // promises.push(topping.getToppings());
-    // //resolve all promises
-    // Promise.all(promises).then(function(result){
-    //     var myBurgers = formatBurgers(result[0]);
-    //     var hbsObject = {
-    //         burgers: myBurgers,
-    //         toppings : result[1],
-    //     }
-    //     console.log(hbsObject);
-    //     res.render("index", hbsObject);
-    // }, function(err){
-    //     res.status(500).send("Error on the server while getting toppings and burgers. Please try again later");
-    // });
-    res.end();
+    var promises = [];
+    var getBurgersPromise = db.Burger.findAll({
+
+    });
+    var getToppingsPromise = db.Topping.findAll({});
+    promises.push(getBurgersPromise);
+    promises.push(getToppingsPromise);
+    //resolve all promises
+    Promise.all(promises).then(function(result){
+        var myBurgers = result[0];
+        console.log(myBurgers);
+        var myToppings = result[1];
+        console.log(myToppings);
+        // var hbsObject = {
+        //     burgers: myBurgers,
+        //     toppings : result[1],
+        // }
+        // console.log(hbsObject);
+        // res.render("index", hbsObject);
+        res.end();
+    }, function(err){
+        res.status(500).send("Error on the server while getting toppings and burgers. Please try again later");
+    });
 });
 
 //to update burger (someone ate it)

@@ -1,2 +1,2 @@
-DROP SCHEMA IF EXISTS `burger_sequelize`;
-CREATE SCHEMA `burger_sequelize`;
+DROP DATABASE IF EXISTS `burger_sequelize`;
+CREATE DATABASE `burger_sequelize`;

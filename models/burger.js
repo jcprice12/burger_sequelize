@@ -26,11 +26,11 @@ module.exports = function(sequelize, DataTypes) {
         timestamps: false
     });
 
-    // Burger.associate = function(models){
-    //     Burger.belongsToMany(models.Topping, {
-    //         through: "BurgerTopping"
-    //     });
-    // }
+    Burger.associate = function(models){
+        Burger.belongsToMany(models.Topping, {
+            through: "BurgerTopping"
+        });
+    }
 
     return Burger;
 };
