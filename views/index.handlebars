@@ -21,7 +21,7 @@
                 <div id="toppingsGroup" class="form-group">
                     {{#each toppings}}
                         <div class="checkbox">
-                            <label><input class="checkInput" type="checkbox" name="{{this.nameToppings}}" value="{{this.nameToppings}}">{{this.nameToppings}}</label>
+                            <label><input class="checkInput" type="checkbox" name="{{this.nameTopping}}" value="{{this.nameTopping}}">{{this.nameTopping}}</label>
                         </div>
                     {{/each}}
                 </div>
@@ -48,27 +48,27 @@
                         {{#unless this.devoured}}
                             <div class="burgerContainer">
                                 <div class="burgerId">
-                                    {{this.idBurgers}}
+                                    {{this.id}}
                                 </div>
                                 <img src="assets/img/burger.png" alt="burger" class="col-xs-12">
                                 <div class="container-fluid">
                                     <h3>Toppings</h3>
                                     <ul>
-                                        {{#each this.toppings}}
-                                            <li>{{this.nameToppings}}</li>
+                                        {{#each this.Toppings}}
+                                            <li>{{this.nameTopping}}</li>
                                         {{/each}}
                                     </ul>
                                 </div>
                                 <div class="container-fluid">
                                     <h3>Comments</h3>
-                                    <p>{{this.comments}}</p>
+                                    <p>{{this.comment}}</p>
                                 </div>
                                 <div class="container-fluid">
                                     <h3>Date Created</h3>
-                                    <p>{{this.date}}</p>
+                                    <p>{{this.dateCreated}}</p>
                                 </div>
                                 <div class="container-fluid eatBurgerButton">
-                                    <form action="/{{this.idBurgers}}?_method=PUT" method="POST">
+                                    <form action="/{{this.id}}?_method=PUT" method="POST">
                                         <button id="submitDevour" class="btn btn-primary btn-lg btn-block myDevour" type="submit">
                                             Eat Da Burger!
                                         </button>
@@ -88,24 +88,24 @@
                         {{#if this.devoured}}
                             <div class="burgerContainer">
                                 <div class="burgerId">
-                                    {{this.idBurgers}}
+                                    {{this.id}}
                                 </div>
                                 <img src="assets/img/burger.png" alt="burger" class="col-xs-12">
                                 <div class="container-fluid">
                                     <h3>Toppings</h3>
                                     <ul>
-                                        {{#each this.toppings}}
-                                            <li>{{this.nameToppings}}</li>
+                                        {{#each this.Toppings}}
+                                            <li>{{this.nameTopping}}</li>
                                         {{/each}}
                                     </ul>
                                 </div>
                                 <div class="container-fluid">
                                     <h3>Comments</h3>
-                                    <p>{{this.comments}}</p>
+                                    <p>{{this.comment}}</p>
                                 </div>
                                 <div class="container-fluid">
                                     <h3>Date Eaten</h3>
-                                    <p>{{this.eatenDate}}</p>
+                                    <p>{{this.dateEaten}}</p>
                                 </div>
                             </div>
                         {{/if}}

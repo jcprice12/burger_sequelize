@@ -1,5 +1,5 @@
-USE `burger_db`;
-INSERT INTO `Toppings` (`nameToppings`) VALUES
+USE `burger_sequelize`;
+INSERT INTO `Toppings` (`nameTopping`) VALUES
 ("guacamole"),
 ("cheese"),
 ("bacon"),
@@ -11,12 +11,12 @@ INSERT INTO `Toppings` (`nameToppings`) VALUES
 ("lettuce"),
 ("tomato");
 
-INSERT INTO `Burgers` (`comments`) VALUES
+INSERT INTO `Burgers` (`comment`) VALUES
 ("Medium Please"),
 ("Cook it however you want I guess"),
 ("Ehh is this optional?");
 
-INSERT INTO `BurgersToppings` (`idBurgers`, `nameToppings`) VALUES
+INSERT INTO `BurgerToppings` (`BurgerId`, `ToppingNameTopping`) VALUES
 (2, "cheese"),
 (2, "onions"),
 (2, "ketchup"),

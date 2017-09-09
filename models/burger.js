@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
 
     Burger.associate = function(models){
         Burger.belongsToMany(models.Topping, {
-            through: "BurgerTopping"
+            through: models.BurgerTopping
         });
     }
 

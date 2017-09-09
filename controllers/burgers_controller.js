@@ -5,44 +5,46 @@ var router = express.Router();
 var db = require("../models");
 
 //helper function to format the array of burgers and their toppings to return back to the client
-// function formatBurgers(burgersToppings){
-//     for(var i = 0; i < burgersToppings.length; i++){
-//         var toppings = burgersToppings[i].toppings;
-//         var toppingsArr = toppings.split(',');
-//         toppings = [];
-//         for(var j = 0; j < toppingsArr.length; j++){
-//             var toppingObj = {
-//                 "nameToppings" : toppingsArr[j],
-//             }
-//             toppings.push(toppingObj);
-//         }
-//         burgersToppings[i].toppings = toppings;
-//     }
-//     return burgersToppings;
-// }
+function formatBurgers(burgers){
+    for(var i = 0; i < burgers.length; i++){
+        burgers[i].dataValues.Toppings = formatToppings(burgers[i].dataValues.Toppings);
+        burgers[i] = burgers[i].dataValues;
+    }
+    return burgers;
+}
+function formatToppings(toppings){
+    for(var i = 0; i < toppings.length; i++){
+        toppings[i] = toppings[i].dataValues;
+    }
+    return toppings;
+}
 
 //route for main page (gets burgers and toppings)
 router.get("/", function(req, res) {
     var promises = [];
     var getBurgersPromise = db.Burger.findAll({
-
+        include : [{
+            model : db.Topping,
+            through : {
+                attributes : ['nameTopping']
+            } 
+        }]
     });
-    var getToppingsPromise = db.Topping.findAll({});
+    var getToppingsPromise = db.Topping.findAll({
+        
+    });
     promises.push(getBurgersPromise);
     promises.push(getToppingsPromise);
     //resolve all promises
     Promise.all(promises).then(function(result){
         var myBurgers = result[0];
-        console.log(myBurgers);
         var myToppings = result[1];
-        console.log(myToppings);
-        // var hbsObject = {
-        //     burgers: myBurgers,
-        //     toppings : result[1],
-        // }
-        // console.log(hbsObject);
-        // res.render("index", hbsObject);
-        res.end();
+        var hbsObject = {
+            burgers: formatBurgers(myBurgers),
+            toppings : formatToppings(myToppings),
+        }
+        console.log(hbsObject);
+        res.render("index", hbsObject);
     }, function(err){
         res.status(500).send("Error on the server while getting toppings and burgers. Please try again later");
     });
