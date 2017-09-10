@@ -54,18 +54,22 @@ router.get("/", function(req, res) {
 //to update burger (someone ate it)
 router.put("/:id", function(req, res) {
     var id = req.params.id;
-    db.Burger.update({
-        devoured : true,
-        dateEaten : new Date().toISOString().slice(0, 19).replace('T', ' ')
-    },
-    {
-        where : {
-            "id" : id,
-        }
-    }).then(function(data){
-        console.log(data);
+    return db.sequelize.transaction(function(t){
+        return db.Burger.update({
+            devoured : true,
+            dateEaten : new Date().toISOString().slice(0, 19).replace('T', ' ')
+        },
+        {
+            where : {
+                "id" : id,
+            },
+            transaction : t
+        });
+    }).then(function(result){
+        console.log(result);
         res.redirect("/");
     }).catch(function(err){
+        console.log("Error during transaction, changes have been rolled back");console.log("Error during transaction, changes have been rolled back");
         console.log(err);
         res.status(500).send("Error updating burger with id: " + id);
     });
@@ -75,17 +79,22 @@ router.put("/:id", function(req, res) {
 router.post("/", function(req, res){
     var formData = req.body;
     console.log(formData);
-    db.Burger.create(formData.burger).then(function(myBurger){
-        myBurger.setToppings(formData.toppings).then(function(data){
-            console.log(data);
-            res.json(data);
-        }).catch(function(err){
-            console.log(err);
-            res.status(500).send("Error making a burger. Please try again later");
+    return db.sequelize.transaction(function(t){
+        return db.Burger.create(formData.burger, {transaction : t}).then(function(myBurger){
+            if(formData.toppings && formData.toppings.length > 0){
+                return myBurger.setToppings(formData.toppings, {transaction : t});
+            } else {
+                return myBurger;
+            }
         });
+    }).then(function(result){
+        console.log("finsished insertion transaction, changes have been committed");
+        console.log(result);
+        res.json(result);
     }).catch(function(err){
+        console.log("Error during transaction, changes have been rolled back");
         console.log(err);
-        res.status(500).send("Error making a burger. Please try again later");
+        res.status(500).send("Error creating a burger. Please try again later.");
     });
 });
 

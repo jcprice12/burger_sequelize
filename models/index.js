@@ -8,7 +8,6 @@ var env       = process.env.NODE_ENV || 'development';
 var config    = require(__dirname + '/../config/config.json')[env];
 var db        = {};
 
-console.log("hello");
 console.log(env);
 
 if (config.use_env_variable) {
@@ -24,7 +23,6 @@ fs
   })
   .forEach(function(file) {
     var model = sequelize['import'](path.join(__dirname, file));
-    console.log(model.name);
     db[model.name] = model;
   });
 
